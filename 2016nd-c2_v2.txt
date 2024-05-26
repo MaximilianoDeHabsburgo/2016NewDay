@@ -52,17 +52,17 @@ cyoAdventure = function (a) {
 	
 	saveTheEndangeredThirdParty(203,0.05); // makes sure the LP/Greens/Other never get 0% in a state
 	applyDrift(201,0.003); //minor boost for bernie every question as balancing
-	applyTrumpDrift(202,-0.008); //minor malus for trump every question so he goes down over time
+	applyTrumpDrift(202,-0.017); //minor malus for trump every question so he goes down over time
 	applyDrift(203,-0.001); //minor malus for third parties every question so they go down over time
     ans = e.player_answers[e.player_answers.length - 1] // useful for checks
 	
 	// remember to comment this out before release
 	console.log(campaignTrail_temp);
 	
-	// this has been replaced with a per question small buff
-	//if (ans == 20721 || ans == 20733 || ans == 20718 || ans == 20728) {
-	//	applyDrift(202,0.01); //minor free global boost for bernie upon doing the first question. doing this via CYOA because I am lazy
-	//}
+	// first question gives trump a big universal buff so he then dies more
+	if (ans == 20721 || ans == 20733 || ans == 20718 || ans == 20728) {
+		applyDrift(202,0.1);
+	}
 	
 	// did you say a trumpy thing? get a trump point!
     if (ans == 1455 || ans == 20718 || ans == 5017 || ans == 5062 || ans == 5023 || ans == 20752 || ans == 20751 || ans == 5099 || ans == 20962 || ans == 20847) {
@@ -230,11 +230,11 @@ cyoAdventure = function (a) {
 			campaignTrail_temp.running_mate_image_url = 'https://i.imgur.com/mVY1oWp.png'; // lower res than other pics, may need to get another
 			campaignTrail_temp.running_mate_last_name = 'Trump';
 			vpname = "Donald Trump";
-		} else if (ans == 9005) { // Gingritch
+		} else if (ans == 9005) { // Gingrich
 			applyDrift(200,0.01);
 			campaignTrail_temp.running_mate_image_url = 'https://i.imgur.com/D2K0kTP.png';
-			campaignTrail_temp.running_mate_last_name = 'Gingritch';
-			vpname = "Newt Gingritch";
+			campaignTrail_temp.running_mate_last_name = 'Gingrich';
+			vpname = "Newt Gingrich";
 		}
 	}
 	//cruz will whine at the VP debate
@@ -790,7 +790,7 @@ campaignTrail_temp.answers_json = [
         "pk": 9005,
         "fields": {
             "question": 1043,
-            "description": "My God. Who would accept? Uh, Gingritch. God, I\'ve got to get the conservatives back on board somehow."
+            "description": "My God. Who would accept? Uh, Gingrich. God, I\'ve got to get the conservatives back on board somehow."
         }
     },
 	{ // generic, always accepts
@@ -11203,7 +11203,7 @@ campaignTrail_temp.answer_feedback_json = [
         "fields": {
             "answer": 20711,
             "candidate": 200,
-            "answer_feedback": "This works well. Foreign policy is a weakness for Sanders, and this is a rare issue where you are aligned well with the base. Gingritch calls you afterwards to congratulate you on your remarks."
+            "answer_feedback": "This works well. Foreign policy is a weakness for Sanders, and this is a rare issue where you are aligned well with the base. Gingrich calls you afterwards to congratulate you on your remarks."
         }
     },
     {
@@ -11626,7 +11626,7 @@ campaignTrail_temp.answer_feedback_json = [
         "fields": {
             "answer": 9005,
             "candidate": 200,
-            "answer_feedback": "Gingritch accepts, happy for a chance to get back into the ring. Can the two of you work a miracle and finally take back the White House?"
+            "answer_feedback": "Gingrich accepts, happy for a chance to get back into the ring. Can the two of you work a miracle and finally take back the White House?"
         }
     },
 	{
