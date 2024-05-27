@@ -18,7 +18,7 @@ var trumpFuckYou = false; // does trump hate you forever
 var runningmatePissed = 0; // this one doesnt matter for walker or robo rubio
 var runningmatePissedMax = 3;
 var wokeness = 0; // how liberal are you
-var wokenessMax = 4; // wokeness cap
+var wokenessMax = 5; // wokeness cap
 var con = 0; // how con are you
 var conMax = 6; // con cap
 var rejectedVP = 0; // 0 means not rejected
@@ -58,8 +58,7 @@ cyoAdventure = function (a) {
     ans = e.player_answers[e.player_answers.length - 1] // useful for checks
 	
 	// remember to comment this out before release
-	console.log(campaignTrail_temp);
-	
+	//console.log(campaignTrail_temp);
 	// first question gives trump a big universal buff so he then dies more
 	if (ans == 20721 || ans == 20733 || ans == 20718 || ans == 20728) {
 		applyDrift(202,0.1);
@@ -304,7 +303,7 @@ cyoAdventure = function (a) {
 		applyDrift(202,-1) // not apply trump drift because this is a nuke
 		applyDrift(202,-1) // not apply trump drift because this is a nuke
 		trumpDeath = true;
-		applyDrift(200,0.11)
+		applyDrift(200,0.09)
 	}
 	//did you drop out for trump? well, you are now gone
 	if (campaignTrail_temp.question_number == 24 && ans == 21059) {
@@ -356,9 +355,12 @@ cyoAdventure = function (a) {
 		}
 	}
 	if (campaignTrail_temp.question_number == 16) {
-		if (wokeness<3) {
+		if (wokeness<4) {
 			campaignTrail_temp.answers_json.find(item => item.pk === 208701).fields.question = ''; // drops woke lib answer
 		}
+	}
+	if (campaignTrail_temp.question_number == 22 && ((kasichPolling-berniePolling)>0)) {
+		campaignTrail_temp.candidate_image_url = 'https://i.imgur.com/tj587oG.png';
 	}
 	//console.log("trump points: "+trumpiness+"\n running mate anger:"+runningmatePissed);
 }
@@ -5572,7 +5574,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 200,
             "state": 1030,
-            "state_multiplier": 0.86
+            "state_multiplier": 0.88
         }
     },
     {
@@ -9484,7 +9486,7 @@ campaignTrail_temp.answer_score_issue_json = [
         "fields": {
             "answer": 20844,
             "issue": 104,
-            "issue_score": 0.3,
+            "issue_score": 0.6,
             "issue_importance": 2
         }
     },
@@ -10852,7 +10854,7 @@ campaignTrail_temp.answer_feedback_json = [
         "fields": {
             "answer": 20844,
             "candidate": 200,
-            "answer_feedback": "This answer certainly leans towards the harder end. It will certainly help you with border states like Arizona and New Mexico, and other states that care a lot about the border, while not doing you any favors in more liberal states."
+            "answer_feedback": "This answer certainly leans towards the softer end. It may hurt you with border states like Arizona and New Mexico, and other states that care a lot about the border, but it should help you in more liberal states."
         }
     },
 	{
@@ -11896,13 +11898,33 @@ endingPicker = (out, totv, aa, quickstats) => {
             }
         }, 50);
     }
-	if (quickstats[0] > 538) { // bigshot
-        setImage("https://cdn.discordapp.com/attachments/1146285215564709978/1193187745330372718/kasich_food.png");
+	if (quickstats[0] >= 538 && !droppedForTrump) { // bigshot
+        setImage("https://i.imgur.com/yylhiH0.png");
 		return `<h3>KASICH WINS 538</h3>yummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwichyummysandwich`;
-	} else if (quickstats[0] == 0) { // bigshot
+	} else if (quickstats[0] == 0 && !droppedForTrump) { // bigshot
         setImage("https://i.imgur.com/J2E6n5b.png");
 		return `<h3>KASICH WINS NO ELECTORAL VOTES</h3>Sanders won big sweep big victory.<br></br>Now the country is communist and the United Soviet States.<br></br>This is so sad. Now all our precious bodily fluids will be full of flouride.<br></br>What a shame.`;
-	} else if (quickstats[0] >= 270 && FUCKYOU && (wasAnsPicked(9001) != true)) { // if you won and you picked a non condi veep
+	} else if (droppedForTrump && aa[0].candidate == 202 && aa[0].electoral_votes >= 270) { // trump won bc of you
+        setImage("https://i.imgur.com/dCH6dob.png");
+		return `<h3>TRUMP WINS AFTER KASICH DROPOUT</h3>My God. He did it. After you dropped out for Trump, the unified Republican vote was able to beat Sanders. An Independent nominee has become President of the United States for the first time since Washington - though Trump is expected to switch back to the GOP shortly.<br></br>This is a very unusual circumstance. Nobody is quite sure how exactly Trump is going to run his administration. From what you\'ve heard, his plans range from surprisingly sensible to downright insane. Hopefully the nation prospers under President Trump.<br></br>In the end, all you did was for naught. You and Cruz beat Trump, but in the end you came crawling back and he won anyway. What a shame.`;
+	} else if (!droppedForTrump && aa[0].candidate == 202 && aa[0].electoral_votes >= 270) { // trump won bc of you
+        setImage("https://i.imgur.com/zZtJe2I.png");
+		return `<h3>TRUMP WINS OUTRIGHT, NATION IN SHOCK</h3>My God. He did it. Somehow, impossibly, Donald Trump has managed to beat both you and Sanders and win outright. An Independent nominee has become President of the United States for the first time since Washington.<br></br>This is a very unusual circumstance. Nobody is quite sure how exactly Trump is going to run his administration. From what you\'ve heard, his plans range from downright insane to... downright insane. Things aren\'t looking good, but hopefully he does better than seems likely.<br></br>In the end, all you did was for naught. You and Cruz beat Trump in the primaries, but in the end you couldn\'t beat him in the general election. What a shame.`;
+	} else if (droppedForTrump && aa[0].candidate == 201 && aa[0].electoral_votes >= 270) { // sanders beat trump after you dropped
+        setImage("https://i.imgur.com/lfWRZyh.png");
+		return `<h3>SANDERS BEATS TRUMP</h3>My God.  What have you wrought?<br></br>After your idiotic drop out for Trump, he lost to Sanders. As you should have expected, you beat him for a reason! The very idea that such a chaotic populist monster could ever become President of the United States is laughable.<br></br>In the end, all you did was for naught. You and Cruz beat Trump in the primaries, and even with your people on his side Trump couldn\'t beat Sanders. You gave it all up for nothing. What a shame.`;
+	}
+	else if(aa[0].electoral_votes < 270 && aa[2].electoral_votes > 0) {
+        setImage("https://i.imgur.com/UUUcJn7.png");
+        return `<h3>DEADLOCK!</h3>
+
+		In a shock, the electoral college has been deadlocked, and Trump\'s made it in. 
+		<br></br>
+		You\’ve managed to deadlock the election. Given that Republicans control both chambers of Congress, you and your running mate are swiftly confirmed as the next President and Vice President of the United States. With a friendly Congress, you\’ll surely have an easy time passing your moderate, bipartisan agenda. You\’ll be able to do what you like with trade, and bring your famous fiscal responsibility to the White House. Maybe you\’ll even be able to create a balanced budget by the end of your first term? Even if not, you\’ll definitely get another. There would have to be a serious crises to disrupt your inevitable victory, a global pandemic or a similar catastrophe. Liberals and Trumpists are going to be furious at what they see as a stolen election, but as long as you have a good four years, you should be able to fend them off fine.
+		<br></br>
+		This is a historic loss for the Progressive Democrats, who have failed, despite all odds, to get their man into the White House. Given Trump\’s splinter campaign, Sanders was expected to beat you, and Democrats are shocked and demoralized. Sanders\' brand of Progressive politics have been discredited by his loss, even as a few of his fellow Democratic Socialists sweep into office on his down ballot coattails. Good luck..`;
+    }
+	else if (quickstats[0] >= 270 && FUCKYOU && (wasAnsPicked(9001) != true)) { // if you won and you picked a non condi veep
         setImage("https://i.imgur.com/CZPa97z.png");
 		return `<h3>UNPRECEDENTED VICTORY FOR REPUBLICANS</h3>
 
@@ -11962,9 +11984,9 @@ Thankfully, the Republican Party still holds a majority in both chambers of Cong
 
 After Trump dropped out for you, your victory was expected. That doesn\'t make it any less sweet, however - especially given the magnitude!
 <br></br>
-What led to your victory? Well, by pivoting in a direction that Trump liked, by treating Sanders like he did, and by compromising your own vision to gain his support, you have managed to convince the Donald to end his war against your campaign, and by doing so brought his supporters back into the fold. Many are surprised that he was willing to back you at all, but you gave a lot for this. Your pivots hurt you, but Bernie was so radical that it didn\'t matter. But in the end, your rhetoric of light and hope didn\'t win you this election. Divisive rhetoric crafted to win over Trump and his supporters did.
+What led to your victory? By treating Sanders like Donald did, and by compromising your own vision to gain his support, you have managed to convince the Donald to end his war against your campaign, and by doing so brought his supporters back into the fold. Many are surprised that he was willing to back you at all, but you gave a lot for this. Your pivots hurt you, but Bernie was so radical that it didn\'t matter. But in the end, your rhetoric of light and hope didn\'t win you this election. Though you\'re going to be the next president, part of you can\'t help but feel that you\'ve failed.
 <br></br>
-Thankfully, you still have a majority in both chambers of Congress, so you should have no trouble getting your agenda through. Though given the bones you\'ve thrown to the Trump crowd, you may have to modify what you desire to suit their tastes. You’ll be able to do what you like with foreign policy, and move the economy in a slightly more populist direction. Maybe you\’ll also somehow be able to balance the budget, or at least cut down the deficit? Well, whatever happens, at least you won. You went from the expectation of total destruction to this historic victory, and that is something to be proud of.`;
+Thankfully, you still have a majority in both chambers of Congress, so you should have no trouble getting your agenda through. Though given the bones you\'ve thrown to the Trump crowd, you may have to modify what you desire to suit their tastes. You’ll be able to do what you like with foreign policy, and move the economy in a slightly more populist direction. Maybe you\’ll also somehow be able to balance the budget, or at least cut down the deficit? Well, whatever happens, at least you won.`;
     }
 	else if (quickstats[0] >= 270 && trumpDropped) { // if you won and trump dropped out for you
         setImage("https://i.imgur.com/DqBQb8C.png");
@@ -12065,7 +12087,7 @@ The Democrats have taken control of the Presidency. Given the razor-thin margins
 This is a historic win for the Progressive Democrats, who are finally able to get their champion into the White House. The size of this victory has turned many heads, however - given Trump\’s splinter campaign, he was expected to do much better. Sanders\' brand of Progressive politics are being normalized by his victory, as a small handful of other Democratic Socialists sweep into office on his down ballot coattails. Retirement is most likely your future, but given that you performed better than expected, you may be able to run again in 2020.`;
     }
 	else if(quickstats[0] == 269) {
-        setImage("https://files.catbox.moe/2wed8y.png");
+        setImage("https://i.imgur.com/UUUcJn7.png");
         return `<h3>DEADLOCK!</h3>
 
 Congratulations, President-Elect.
