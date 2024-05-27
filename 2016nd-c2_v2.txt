@@ -28,6 +28,7 @@ var trumpPolling = 0;
 var berniePolling = 0;
 var droppedVeeps = 0;
 var totalVeepAnswers = 8; // this is the number of potential answers for the question for picking a veep when cruz drops out - change it if you add one!
+var trumpDeath = false;
 // endings checks
 var FUCKYOU = false; // did cruz fuck you over
 var cruzRevolt = false; // did cruz whine
@@ -302,6 +303,7 @@ cyoAdventure = function (a) {
 		trumpDropped = true;
 		applyDrift(202,-1) // not apply trump drift because this is a nuke
 		applyDrift(202,-1) // not apply trump drift because this is a nuke
+		trumpDeath = true;
 		applyDrift(200,0.11)
 	}
 	//did you drop out for trump? well, you are now gone
@@ -445,15 +447,17 @@ function applyDrift(candidateId, driftAmount, stateId) {
 //applies a global drift, but avoids states where the candidate is under 0.2 (basically dead) if its negative and allows for states where support is between 0.2 and 0.1 
 function applyTrumpDrift(candidateId, driftAmount) {
   // Loop through each object in the JSON array
-  campaignTrail_temp.candidate_state_multiplier_json.forEach((item) => {
-    // Check if the candidate ID matches the given candidate
-    if (item.fields.candidate === candidateId) {
-		if ( (item.fields.state_multiplier >= 0.2 && (driftAmount<0)) || driftAmount>0) {
-			item.fields.state_multiplier += driftAmount;
-			item.fields.state_multiplier = Math.max(0.1, item.fields.state_multiplier); // Ensure the multiplier never goes below 0.1
+  if (!trumpDeath) {
+	  campaignTrail_temp.candidate_state_multiplier_json.forEach((item) => {
+		// Check if the candidate ID matches the given candidate
+		if (item.fields.candidate === candidateId) {
+			if ( (item.fields.state_multiplier >= 0.2 && (driftAmount<0)) || driftAmount>0) {
+				item.fields.state_multiplier += driftAmount;
+				item.fields.state_multiplier = Math.max(0.1, item.fields.state_multiplier); // Ensure the multiplier never goes below 0.1
+			}
 		}
-    }
-  });
+	  });
+  }
 }
 
 function saveTheEndangeredThirdParty(candidateId, minAmount) {
@@ -589,7 +593,7 @@ campaignTrail_temp.questions_json = [
         "pk": 1027,
         "fields": {
             "priority": 10,
-            "description": "You worked for Lehman brothers when it went down in 2008, and Sanders and his surrogates, as well as Trump, have attacked you for this. What will be your campaign’s response?",
+            "description": "You worked for Lehman Brothers when the company went bankrupt during the 2008 financial crisis, and Sanders and his surrogates, as well as Trump, have attacked you for this. What will be your campaign’s response?",
             "likelihood": 1
         }
     },
@@ -1303,7 +1307,7 @@ campaignTrail_temp.answers_json = [
         "pk": 20759,
         "fields": {
             "question": 1027,
-            "description": " Deflect, deflect, deflect! We'll talk about Trump's scandals, Bernie's radicalism, anything else."
+            "description": "Deflect, deflect, deflect!"
         }
     },
     {
@@ -1591,7 +1595,7 @@ campaignTrail_temp.answers_json = [
         "pk": 21059,
         "fields": {
             "question": 21057,
-            "description": "A splinter campaign will doom the Republican cause. It's a shame, but I've got to do it."
+            "description": "It's the only way to unify the Republican vote. I have no choice."
         }
     },
 	{
@@ -5469,7 +5473,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 200,
             "state": 1019,
-            "state_multiplier": 0.95
+            "state_multiplier": 0.82
         }
     },
     {
@@ -5622,7 +5626,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 200,
             "state": 1036,
-            "state_multiplier": 0.92
+            "state_multiplier": 0.88
         }
     },
     {
@@ -5730,7 +5734,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 200,
             "state": 1048,
-            "state_multiplier": 0.85
+            "state_multiplier": 0.89
         }
     },
     {
@@ -11952,7 +11956,7 @@ You were expected to lose this election, and despite your pivots to energize the
 What led to your loss? Well, your conservative turn in messaging helped bring out a base that was often drawn to Trump, but it often resulted in your taking positions unpopular to the average American. In the end, you couldn\'t shake the legacy of Bush and Romney, and the Trump splinter just added fuel to the fire. Divisive populism from both the left and the right brought you down.
 <br></br>
 Thankfully, the Republican Party still holds a majority in both chambers of Congress, so Sanders should have trouble getting his radical socialist agenda through. Even despite that, this is a historic win for the Progressive Democrats, who are finally able to get their champion into the White House. Sanders\' brand of Progressive politics is increasingly becoming normalized, as other Democratic Socialists sweep into office on his down ballot coattails. Hopefully the Republican Nominee in '20 can block him from a second term. For now, it looks like retirement is in your future.`;
-    } else if (quickstats[0] >= 310 && trumpDropped) { // if you won and trump dropped out for you
+    } else if (quickstats[0] >= 310 && trumpDropped) { // if you won big and trump dropped out for you
         setImage("https://i.imgur.com/DqBQb8C.png");
 		return `<h3>KASICH WINS BIGLY WITH SUPPORT FROM TRUMP</h3>
 
@@ -11968,9 +11972,9 @@ Thankfully, you still have a majority in both chambers of Congress, so you shoul
 
 After Trump dropped out for you, your victory was expected. That doesn\'t make it any less sweet, however.
 <br></br>
-What led to your victory? Well, by pivoting in a direction that Trump liked, by treating Sanders like he did, and by compromising your own vision to gain his support, you have managed to convince the Donald to end his war against your campaign, and by doing so brought his supporters back into the fold. Many are surprised that he was willing to back you at all, but you gave a lot for this. Your pivots hurt you, but Bernie was so radical that it didn\'t matter. But in the end, your rhetoric of light and hope didn\'t win you this election. Divisive rhetoric crafted to win over Trump and his supporters did.
+What led to your victory? By treating Sanders like Donald did, and by compromising your own vision to gain his support, you have managed to convince the Donald to end his war against your campaign, and by doing so brought his supporters back into the fold. Many are surprised that he was willing to back you at all, but you gave a lot for this. Your pivots hurt you, but Bernie was so radical that it didn\'t matter. But in the end, your rhetoric of light and hope didn\'t win you this election. Though you\'re going to be the next president, part of you can\'t help but feel that you\'ve failed.
 <br></br>
-Thankfully, you still have a majority in both chambers of Congress, so you should have no trouble getting your agenda through. Though given the bones you\'ve thrown to the Trump crowd, you may have to modify what you desire to suit their tastes. You’ll be able to do what you like with foreign policy, and move the economy in a slightly more populist direction. Maybe you\’ll also somehow be able to balance the budget, or at least cut down the deficit? Well, whatever happens, at least you won. You went from the expectation of total destruction to this historic victory,  and that is something to be proud of.`;
+Thankfully, you still have a majority in both chambers of Congress, so you should have no trouble getting your agenda through. Though given the bones you\'ve thrown to the Trump crowd, you may have to modify what you desire to suit their tastes. You’ll be able to do what you like with foreign policy, and move the economy in a slightly more populist direction. Maybe you\’ll also somehow be able to balance the budget, or at least cut down the deficit? Well, whatever happens, at least you won.`;
     }
 else if (quickstats[0] < 270 && trumpDropped) { // if you lost and trump dropped out for you
         setImage("https://i.imgur.com/AE5X2g4.png");

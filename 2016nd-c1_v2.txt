@@ -38,6 +38,9 @@ function replaceFurtherReading() {
 			<p><a href="https://www.politico.com/story/2016/02/john-kasich-first-100-days-219324">https://www.politico.com/story/2016/02/john-kasich-first-100-days-219324</a>
 			<p><a href="https://www.huffpost.com/entry/john-kasich-new-hampshire-primary_n_56ba9c27e4b0b40245c4a1aa">https://www.huffpost.com/entry/john-kasich-new-hampshire-primary_n_56ba9c27e4b0b40245c4a1aa</a>
 			<p>and some more articles that I can\'t find or don\'t remember</p></p></p></p></p></p></p></p></p></p>
+			
+			<h1>Canon map</h1>
+			<img src="https://i.imgur.com/xGAYd5m.png" width=800>
           </div>`;
       }
     });
@@ -103,7 +106,7 @@ e.creditsPage = () => {
     <h3>MUSIC SELECTION:</h3>
     <p><font color='#EACA7D'>Fmr. Governor John Kasich and his campaign, with curation by Max</font></p>
     <h3>NOTE FROM THE CREATOR:</h3>
-    <p><font color='#E0C8FF'>Hi, I\'m Max! This is not the best mod but it\'s mine, and I hope you enjoy. My goal here was to create a mod with fun and varied gameplay using an interesting and reasonably plausible scenario which deviated from what was the norm at the time I started it, big narrative heavy stuff. That type of mod is fun, but personally I\'m a big sucker for these very gameplay oriented mods - so I made my own. I hope you enjoy, feel free to message me on discord (max_6711) with thoughts or feedback or whatever. Also, I am currently working on the Trump side, and I will probably make the 2020 sequel to this at some point. But I am fairly unlikely to ever make the Bernie side, just because it\'s too similar to the multiple other Bernie mods out there. I don\'t think I could ever do it better than 2016 4way redux, for instance. - Max</font></p>
+    <p><font color='#E0C8FF'>Hi, I\'m Max! I hope you enjoy this mod! My goal here was to create a mod with fun and varied gameplay using an interesting and reasonably plausible scenario which deviated from what was the norm at the time I started it, big narrative heavy stuff. That type of mod is fun, but personally I\'m a big sucker for these very gameplay oriented mods - so I made my own. It's got pretty fun gameplay, a decent bit of CYOA, and a whole bunch of endings. I hope you enjoy, feel free to message me on discord (max_6711) with thoughts or feedback or whatever. Also, I am currently working on the Trump side, and I will probably make the 2020 sequel to this at some point. But I am fairly unlikely to ever make the Bernie side, just because it\'s too similar to the multiple other Bernie mods out there. I don\'t think I could ever do it better than 2016 4way redux, for instance. - Max</font></p>
   `
   changeGameDisp(true);
   var spacer = document.createElement("sisar_gorcia_will_travel_back_in_time_and_win_the_2020_mod_just_you_wait");
