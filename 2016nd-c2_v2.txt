@@ -1122,6 +1122,14 @@ campaignTrail_temp.answers_json = [
             "description": "We need to make sure that we can win Pennsylvania. We'll hit it, and hit it hard."
         }
     },
+	{
+        "model": "campaign_trail.answer",
+        "pk": 5130,
+        "fields": {
+            "question": 1037,
+            "description": "We need to make sure that we can win in North Carolina, in Florida, and in Virginia. That\'s what we\'ve got to do."
+        }
+    },
     {
         "model": "campaign_trail.answer",
         "pk": 5127,
@@ -5308,7 +5316,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 200,
             "state": 1002,
-            "state_multiplier": 0.99
+            "state_multiplier": 1.04
         }
     },
     {
@@ -9712,7 +9720,40 @@ campaignTrail_temp.answer_score_state_json = [
             "state": 1037,
             "candidate": 200,
             "affected_candidate": 200,
-            "state_multiplier": 0.005
+            "state_multiplier": 0.007
+        }
+    },
+	{
+        "model": "campaign_trail.answer_score_state",
+        "pk": 205155,
+        "fields": {
+            "answer": 5130,
+            "state": 1045,
+            "candidate": 200,
+            "affected_candidate": 200,
+            "state_multiplier": 0.0025
+        }
+    },
+	{
+        "model": "campaign_trail.answer_score_state",
+        "pk": 205156,
+        "fields": {
+            "answer": 5130,
+            "state": 1008,
+            "candidate": 200,
+            "affected_candidate": 200,
+            "state_multiplier": 0.0025
+        }
+    },
+	{
+        "model": "campaign_trail.answer_score_state",
+        "pk": 205157,
+        "fields": {
+            "answer": 5130,
+            "state": 1032,
+            "candidate": 200,
+            "affected_candidate": 200,
+            "state_multiplier": 0.0025
         }
     },
     {
